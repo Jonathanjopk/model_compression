@@ -54,9 +54,9 @@ class vgg(nn.Module):
 
     def forward(self, x):
         x = self.feature(x)
-        x = nn.AvgPool2d(2)(x)
-        x = x.view(x.size(0), -1)
-        y = self.classifier(x)
+        x = nn.AvgPool2d(2)(x) # [batch x 2 x 2 x 512] > [batch x 1 x 1 x 512]
+        x = x.view(x.size(0), -1) # [batch x 512]
+        y = self.classifier(x) # [batch x 10]
         return y
 
     def _initialize_weights(self):
