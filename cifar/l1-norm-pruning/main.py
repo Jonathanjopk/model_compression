@@ -122,10 +122,10 @@ def train(epoch):
             data, target = data.cuda(), target.cuda()
         data, target = Variable(data), Variable(target)
         optimizer.zero_grad()
-        output = model(data)
+        output = model(data) # [batch x 10]
         loss = F.cross_entropy(output, target)
         avg_loss += loss.data.item()
-        pred = output.data.max(1, keepdim=True)[1]
+        pred = output.data.max(1, keepdim=True)[1] # [batch x 1], get max position
         train_acc += pred.eq(target.data.view_as(pred)).cpu().sum()
         loss.backward()
         optimizer.step()
